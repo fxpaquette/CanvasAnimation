@@ -48,7 +48,7 @@ class Ball{
 }
 
 vecBalls = []
-for(let i=0;i<10;i++){
+for(let i=0;i<5;i++){
     vecBalls.push(new Ball());
 }
 
@@ -69,12 +69,20 @@ function draw(){
         ball.y += ball.dy;
 
         //If ball touches side reverse direction
-        if ((ball.x - ball.radius <= 0) || (ball.x+ball.radius>= effectiveW)){
+        if ((ball.x - ball.radius <= 0)){
             ball.dx = -ball.dx;
+            ball.x = ball.radius;
+        }else if ((ball.x+ball.radius>= effectiveW)){
+            ball.dx = -ball.dx;
+            ball.x  = effectiveW - ball.radius;
         }
         //If ball touches top or bottom reverse direction
-        if ((ball.y - ball.radius <= 0) || (ball.y+ball.radius>= effectiveH)){
+        if ((ball.y - ball.radius <= 0)){
             ball.dy = -ball.dy*inertie;
+            ball.y = ball.radius;
+        }else if ((ball.y+ball.radius>= effectiveH)){
+            ball.dy = -ball.dy*inertie;
+            ball.y = effectiveH - ball.radius;
         }else{
             //ball.dy += 0.1; //Uncomment to add gravity effect
         }
@@ -114,6 +122,9 @@ function draw(){
                         A.dy += collisionWeightA * yCollision;
                         B.dx -= collisionWeightB * xCollision;
                         B.dy -= collisionWeightB * yCollision;
+                        let audio = new Audio('../bin/sounds/97792__cgeffex__metal-impact.wav');
+                        audio.playbackRate = 3;
+                        audio.play();
                     }
                 }
             }
