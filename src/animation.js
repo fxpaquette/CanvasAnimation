@@ -1,7 +1,7 @@
 let canva = document.getElementById("myCanvas");
 let ctx = canva.getContext("2d");
 ctx.strokeWidth=5;
-let grav = 0.99;
+let inertie = 1; //Between 0 and 1, over time ball will stop moving with a value 0<inertie<1, if inertie = 1, there is no effect ver time
 
 effectiveW = window.innerWidth;
 effectiveH = window.innerHeight;
@@ -74,9 +74,9 @@ function draw(){
         }
         //If ball touches top or bottom reverse direction
         if ((ball.y - ball.radius <= 0) || (ball.y+ball.radius>= effectiveH)){
-            ball.dy = -ball.dy*grav;
+            ball.dy = -ball.dy*inertie;
         }else{
-
+            //ball.dy += 0.1; //Uncomment to add gravity effect
         }
     }
 
